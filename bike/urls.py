@@ -18,7 +18,7 @@ from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-#from reservation.views import RootView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -31,8 +31,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('swagger/', schema_view.with_ui('swagger'), name='schema-swagger-ui'),
-    path('', schema_view.with_ui('swagger'), name='schema-swagger-ui'), # SWAGGER COMO ROOT DA MINHA APLICACAO
+    path('swagger/', schema_view.with_ui('swagger'), name='schema-swagger-ui'),
     path('reservation/', include('reservation.urls')),
-    #path('',RootView.as_view())
+    path('accessToken/', TokenObtainPairView.as_view()),
+    path('accessToken/refresh/', TokenRefreshView.as_view()),
 ]

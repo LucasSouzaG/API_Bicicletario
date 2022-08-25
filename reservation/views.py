@@ -2,10 +2,13 @@ from rest_framework.generics import GenericAPIView
 from reservation.serializers import *
 from reservation.controllers import *
 from django.http import JsonResponse
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
-class ReservationView(GenericAPIView):
 
+class ReservationView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    
     def get_serializer_class(self):
         if self.request.method == "GET":
             return ListReservationSerializers
@@ -14,6 +17,7 @@ class ReservationView(GenericAPIView):
     
     def get(self, request):  # Preciso especificar o metodo que eu preciso como nome da função no caso é DEF GET(), o mesmo do self.request.method
         return JsonResponse({"reservation":ControllerReservation.list_reservation()})
+        #return JsonResponse({"reservation":f"{permission_classes}"})
 
     def post(self, request):  # Preciso especificar o metodo que eu preciso como nome da função no caso é DEF POST(), o mesmo do self.request.method
         try:
@@ -25,11 +29,12 @@ class ReservationView(GenericAPIView):
             return JsonResponse({"result":f"Reservation filled"}, status=400)
         except Exception as error:
             return JsonResponse({'error':f'{error}'}, status=400)
-
     
 class ReservationByIdView(GenericAPIView): 
+    permission_classes = (IsAuthenticated,)
     
     def get_serializer_class(self):
+
         if self.request.method == 'DELETE':
             return DeleteReservationSerializers
         if self.request.method == 'PUT':

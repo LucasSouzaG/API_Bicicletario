@@ -33,6 +33,7 @@ class ReservationView(GenericAPIView):
 class ReservationByIdView(GenericAPIView): 
     permission_classes = (IsAuthenticated,)
     
+    
     def get_serializer_class(self):
 
         if self.request.method == 'DELETE':

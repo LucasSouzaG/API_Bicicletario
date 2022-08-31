@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class ReservationView(GenericAPIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     
     def get_serializer_class(self):
         if self.request.method == "GET":
@@ -31,8 +31,7 @@ class ReservationView(GenericAPIView):
             return JsonResponse({'error':f'{error}'}, status=400)
     
 class ReservationByIdView(GenericAPIView): 
-    #permission_classes = (IsAuthenticated,)
-
+    permission_classes = (IsAuthenticated,)
     
     def get_serializer_class(self):
 
